@@ -1,0 +1,197 @@
+<head>
+  <style type="text/css">
+    @charset "UTF-8";
+
+    [ng\:cloak],
+    [ng-cloak],
+    [data-ng-cloak],
+    [x-ng-cloak],
+    .ng-cloak,
+    .x-ng-cloak,
+    .ng-hide:not(.ng-hide-animate) {
+      display: none !important;
+    }
+
+    ng\:form {
+      display: block;
+    }
+
+    .ng-animate-shim {
+      visibility: hidden;
+    }
+
+    .ng-anchor {
+      position: absolute;
+    }
+  </style>
+  <meta charset="utf-8">
+  <title>SomaFM Player: Left Coast 70s</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- REMOVE LINE BELOW BEFORE DEPLOY 
+    <base href="/" /> -->
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+
+
+
+
+
+
+
+
+<body 
+ng-app="somafmPlayerApp" class="ng-scope">
+  <!--[if lt IE 7]>
+	<p class="browsehappy">
+        You are using an 
+		<strong>outdated</strong> browser. Please
+        
+		<a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      
+	</p>
+	<![endif]-->
+  <div class="container ng-scope" ng-controller="MainCtrl as mainCtrl">
+
+
+
+
+
+
+
+
+<!-------------------------------------------------------------->
+
+  <div id="wrap">
+	<div id="album">
+		<div id="cover">
+			<div id="print">
+			</div>
+		</div>
+		<div id="vinyl">
+			<div id="print">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- --------------------------------------------------------------- -->
+
+
+    <div class="footer ng-isolate-scope" config="mainCtrl.config">
+      <div class="player ng-isolate-scope" ng-show="config.hasPlayer">
+        <div id="audioPlayer"></div>
+        <div class="background">
+          <div class="image-container">
+            <img class="station-img" ng-src="https://api.somafm.com/img/seventies120.jpg" src="https://api.somafm.com/img/seventies120.jpg">
+          </div>
+        </div>
+        <div class="controls-container">
+          <div class="controls">
+            <!--Play Button-->
+            <!-- ngIf: !$root.playingStation.playing -->
+            <button ng-if="!$root.playingStation.playing" class="btn btn-link ng-scope" ng-disabled="!$root.playingStation" ng-click="play($root.playingStation)">
+              <i class="fa fa-fw fa-lg fa-play"></i>
+            </button>
+            <!-- end ngIf: !$root.playingStation.playing -->
+            <!--Stop Button-->
+            <!-- ngIf: $root.playingStation.playing -->
+            <!--Volume Down-->
+            <!-- ngIf: !isMuted() -->
+            <button ng-if="!isMuted()" class="btn btn-link ng-scope" ng-disabled="!$root.playingStation" ng-click="toggleMute()">
+              <i class="fa fa-fw fa-lg fa-volume-down"></i>
+            </button>
+            <!-- end ngIf: !isMuted() -->
+            <!--Volume Off-->
+            <!-- ngIf: isMuted() -->
+            <!--Volume Bar-->
+            <div class="volumebar ng-isolate-scope" value="volume" min="0" max="1" ng-disabled="!$root.playingStation" value-change="updateVolume(val)">
+              <div class="track"></div>
+              <div class="value" style="width: 50%;"></div>
+            </div>
+            <!--Volume Up-->
+            <button class="btn btn-link" ng-disabled="!$root.playingStation" ng-click="maxVolume()">
+              <i class="fa fa-fw fa-lg fa-volume-up"></i>
+            </button>
+            <!-- Sleep Timer-->
+            <div class="timer-dropdown" id="timer-button-block" width="54px">
+              <button class="btn btn-link" ng-disabled="!$root.playingStation" ng-click="popUpTimer()" data-toggle="dropdown">
+                <i class="fa fa-fw fa-lg far fa-clock-o" id="timer-icon"></i>
+              </button>
+              <div class="timer-dropdown-content" width="54px" id="timer-content-block">
+                <label>Sleep in:</label>
+                <hr>
+                <a href="#" ng-click="setSleepTimer(10)">10 mins</a>
+                <br>
+                <a href="#" ng-click="setSleepTimer(20)">20 mins</a>
+                <br>
+                <a href="#" ng-click="setSleepTimer(30)">30 mins</a>
+                <br>
+                <a href="#" ng-click="setSleepTimer(60)">60 mins</a>
+                <br>
+                <a href="#" ng-click="setSleepTimer(90)">90 mins</a>
+                <br>
+                <a href="#" ng-click="setSleepTimer(120)">120 mins</a>
+                <br>
+              </div>
+            </div>
+            <div class="timer-running-dropdown" id="timer-status-block" width="54px">
+              <button id="timer_text" class="btn btn-link timer-text-style" ng-click="popUpStopTimer()"></button>
+              <div class="timer-running-content" width="54px" id="timer-running-block">
+                <button class="btn btn-link" ng-click="stopSleepTimer()">Stop </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav>
+        <a ui-sref-active="selected" ui-sref="all-stations" class="" href="#/all-stations">
+          <!-- ngIf: !isSelected('all-stations') -->
+          <img ng-if="!isSelected('all-stations')" class="img-responsive ng-scope" src="images/nav/312096bd.all_stations_btn.png">
+          <!-- end ngIf: !isSelected('all-stations') -->
+          <!-- ngIf: isSelected('all-stations') -->
+        </a>
+        <a ui-sref-active="selected" ui-sref="fav-stations" class="" href="#/fav-stations">
+          <!-- ngIf: !isSelected('fav-stations') -->
+          <img ng-if="!isSelected('fav-stations')" class="img-responsive ng-scope" src="images/nav/4707f272.fav_stations_btn.png">
+          <!-- end ngIf: !isSelected('fav-stations') -->
+          <!-- ngIf: isSelected('fav-stations') -->
+        </a>
+        <a ui-sref-active="selected" ui-sref="fav-songs" class="" href="#/fav-songs">
+          <!-- ngIf: !isSelected('fav-songs') -->
+          <img ng-if="!isSelected('fav-songs')" class="img-responsive ng-scope" src="images/nav/aa611af5.fav_songs_btn.png">
+          <!-- end ngIf: !isSelected('fav-songs') -->
+          <!-- ngIf: isSelected('fav-songs') -->
+        </a>
+        <a ui-sref-active="selected" ui-sref="community" class="" href="#/community">
+          <!-- ngIf: !isSelected('community') -->
+          <img ng-if="!isSelected('community')" class="img-responsive ng-scope" src="images/nav/a5b337ac.community_btn.png">
+          <!-- end ngIf: !isSelected('community') -->
+          <!-- ngIf: isSelected('community') -->
+        </a>
+        <!--    <a ui-sref-active="selected" ui-sref="support"><img ng-if="!isSelected('support')" class="img-responsive" src="../../images/nav/7351364d.donate_btn.png" /><img ng-if="isSelected('support')" class="img-responsive" src="../../images/nav/a1fc9f60.donate_selected_btn.png" /></a> -->
+        <!-- ngIf: !$root.playingStation -->
+        <!-- ngIf: $root.playingStation -->
+        <a ng-if="$root.playingStation" ui-sref-active="selected" ui-sref="now-playing({stationID: $root.playingStation._id})" class="ng-scope selected" href="#/now-playing/seventies">
+          <!-- ngIf: !isSelected('now-playing') -->
+          <!-- ngIf: isSelected('now-playing') -->
+          <img ng-if="isSelected('now-playing')" class="img-responsive ng-scope" src="images/nav/6a97c18a.now_playing_selected_btn.png">
+          <!-- end ngIf: isSelected('now-playing') -->
+        </a>
+        <!-- end ngIf: $root.playingStation -->
+      </nav>
+    </div>
+  </div>
+  <!--[if lt IE 9]>
+															<script src="bower_components/es5-shim/es5-shim.js"></script>
+															<script src="bower_components/json3/lib/json3.min.js"></script>
+															<![endif]-->
+  <script src="scripts/6e7d5ad1.vendor.js"></script>
+  <script src="scripts/5758c349.somafm.js"></script>
+
+</body>
+
+
+
